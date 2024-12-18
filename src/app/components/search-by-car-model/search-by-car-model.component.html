@@ -1,0 +1,27 @@
+<section class="content-grid">
+  <div class="container">
+    <mat-grid-list cols="3" rowHeight="100px" gutterSize="10px">
+      <mat-grid-tile *ngFor="let tempCarModel of carModels" class="box-tile">
+        <div class="box-content">
+          <a routerLink="/carModelParts/{{tempCarModel.id}}" routerLinkActive="active-link">
+            Car model: {{ tempCarModel.modelName }} {{tempCarModel.yearOfProduction}} <br>
+
+          </a>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <div *ngIf="carModels.length == 0" class="alert alert-warning" role="alert">
+      No car models available for selected car brand.
+    </div>
+    <mat-paginator
+      (page)="onPageChanged($event)"
+      [length]="theTotalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageNumber"
+      [pageSizeOptions]="[5, 10, 15,20]
+      "aria-label="Select page">,
+    </mat-paginator>
+
+  </div>
+
+</section>

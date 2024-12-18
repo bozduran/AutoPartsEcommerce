@@ -1,1 +1,167 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons"); /* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: Arial, sans-serif;
+
+  min-height: 100vh;
+  display: flex;
+
+  margin:0 auto;
+
+  flex-direction: column;
+  background-color: #ffffff;
+
+}
+
+header{
+
+  text-align: center;
+  background-color: #7a7878;
+  min-height: 100px;
+
+}
+
+
+nav {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  background-color: #ff0000;
+  min-height: 70px;
+  list-style: none;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+footer {
+  text-align: center;
+  background-color: #7a7878;
+  min-height: 100px;
+}
+
+/*main{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}*/
+
+.sidebar{
+  text-align: center;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  flex-flow: column wrap;
+  background-color: #7a7878;
+}
+.sidebar ul {
+  list-style: none; /* Removes bullets */
+  padding: 0;       /* Removes padding */
+  margin: 0;        /* Removes margin */
+}
+
+.sidebar ul li {
+  margin: 0;        /* Removes margin between list items */
+  padding: 0;       /* Removes padding inside list items */
+}
+
+/*
+
+
+.sidebar ul{
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 2;
+  justify-content: space-evenly;
+
+
+}
+
+.sidebar ul li{
+
+  margin: 10px 0;
+
+  display: flex;
+  flex-grow: 1;
+
+  position: relative;
+  list-style-type: none;
+}
+.sidebar ul li a{
+  text-decoration: none;
+  color: #100303;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+}
+*/
+
+
+
+/*
+.container {
+  flex-grow: 1;
+
+  justify-self: stretch;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-flow: row wrap;
+}
+
+.box{
+  display: flex;
+  justify-content: stretch;
+  text-align: center;
+  background-color: #ffffff;
+}
+*/
+
+
+
+/*html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
+
+.box-tile {
+  background: #69b9fa; /* Default box background */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  text-align: center;
+
+}
+
+.box-content {
+  padding: 10px;
+}
+
+.box-tile:hover {
+  background: #1976d2; /* Darker color on hover */
+  cursor: pointer;
+}
+
+.container{
+  margin: 50px ;
+}
+
+
+.logo {
+  background-image: url("assets/images/logo.png");
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+}
