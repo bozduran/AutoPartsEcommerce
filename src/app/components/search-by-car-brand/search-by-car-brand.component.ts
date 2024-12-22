@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CarBrand} from '../../common/car-brand';
 import {CarBrandService} from '../../services/car-brand.service';
-import {NgbPagination} from '@ng-bootstrap/ng-bootstrap';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {NgForOf} from '@angular/common';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";

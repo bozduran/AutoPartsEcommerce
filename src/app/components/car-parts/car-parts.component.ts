@@ -38,27 +38,32 @@ export class CarPartsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.route.params.subscribe(params => {
       this.loadCarParts();
     })
+
   }
 
   processResult() {
+
     return (data:any)=>{
       this.parts = data._embedded.parts;
-      this.pageNumber = data.page.number+1;// difference of indexing between spring and angular
+      this.pageNumber = data.page.number+1;//   difference of indexing between spring and angular
       this.pageSize = data.page.size;
       this.theTotalElements = data.page.totalElements;
     };
+
   }
 
   updatePageSize(pageSize:string){
     this.pageSize = +pageSize;
     this.pageNumber = 0;
-    this.getCarPartsById();
+    this.getCarPartsByCarModel();
   }
 
   onPageChanged(event: any) {
+    //    Update base on page cgange
     if (this.pageSize!=event.pageSize){
       this.updatePageSize(event.pageSize);
     }else {
@@ -66,36 +71,41 @@ export class CarPartsComponent implements OnInit {
     }
 
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+
     if (hasCategoryId){
-      this.getCarPartsById()
+      this.getCarPartsByCarModel()
     }else {
       this.getAllParts()
     }
 
   }
 
-  getCarPartsById(){
-    this.carPartService.getCarPartById(this.pageNumber-1,
-      this.pageSize,
-      this.carModelId).subscribe(
-      this.processResult()
-    );
-  }
 
 
 
   loadCarParts(){
-    // -- chek if there is id
+    //    check if there is id
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
 
     if (hasCategoryId) {
+      //    Show parts for a specific car model based on id
+      console.log(' loadCarParts' + this.route.snapshot.paramMap.get('id'));
       this.carModelId = +this.route.snapshot.paramMap.get('id')!;
-      this.getCarPartsById();
+      this.getCarPartsByCarModel();
     }else{
-      console.log("else")
+      //    Show all parts
       this.getAllParts();
     }
-    console.log(" addsasda "+this.parts.length);
+  }
+
+  getCarPartsByCarModel(){
+    //    Call service for a car model parts
+    this.carPartService.getPartByModel(this.pageNumber-1,
+      this.pageSize,
+      this.carModelId).subscribe(
+      this.processResult()
+    );
+
   }
 
 

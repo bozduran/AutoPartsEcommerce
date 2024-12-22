@@ -4,7 +4,7 @@ import {SubPartCategory} from '../../common/sub-part-category';
 import {SubPartCategoryService} from '../../services/sub-part-category.service';
 import {NgForOf} from '@angular/common';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
-import {NgbAlert} from '@ng-bootstrap/ng-bootstrap';
+/*import {NgbAlert} from '@ng-bootstrap/ng-bootstrap';*/
 
 
 

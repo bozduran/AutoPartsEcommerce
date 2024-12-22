@@ -4,5 +4,6 @@ export class Part {
   partName!: string;
   partDescription!: string;
   vinNumber!: string;
+  price! : number;
 
 }

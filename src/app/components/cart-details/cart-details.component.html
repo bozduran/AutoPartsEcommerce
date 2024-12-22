@@ -1,0 +1,67 @@
+
+<div *ngIf="cartItems.length>0; else elseBlock ">
+  <div>
+    <table mat-table [dataSource]="dataSource.data" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let tempCartItem"> {{tempCartItem.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef> Quantity </th>
+      <td mat-cell *matCellDef="let tempCartItem"> {{tempCartItem.quantity}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let tempCartItem"> {{tempCartItem.price  | currency:'EUR'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+
+      <td mat-cell *matCellDef="let tempCartItem">
+
+        <button mat-icon-button aria-label="true"  (click)="removeCartItem(tempCartItem)"  >
+          <mat-icon><span class="material-symbols-outlined">
+                  delete_button
+                  </span></mat-icon>
+        </button>
+
+        <button mat-icon-button aria-label="true" (click)="decreaseCartItemQuantity(tempCartItem)">
+          <mat-icon><span class="material-symbols-outlined">
+                  remove_button
+                  </span></mat-icon>
+        </button>
+
+        <button mat-icon-button aria-label="true"  (click)="addCartItem(tempCartItem)" >
+          <mat-icon><span class="material-symbols-outlined">
+                add_button
+                </span></mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+  </table>
+  </div>
+
+  <div class="cart-details-bottom">
+    <p><strong>Total price:</strong> {{totalPrice | currency: "EUR" }}</p>
+    <button mat-flat-button routerLink="/checkout"
+            routerLinkActive="active-link">Checkout</button>
+
+  </div>
+</div>
+
+<ng-template #elseBlock>
+  <div class="empty-cart-message">
+    <p>No product in the shopping cart</p>
+  </div>
+</ng-template>
+
+
+

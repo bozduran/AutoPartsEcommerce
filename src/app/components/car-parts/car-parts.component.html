@@ -4,15 +4,18 @@
       <mat-grid-tile *ngFor="let tempPart of parts" class="box-tile">
         <div class="box-content">
 
-          <a routerLink="/carPart/{{tempPart.id}}" routerLinkActive="active-link">
+          <a routerLink="/partDetails/{{tempPart.id}}" routerLinkActive="active-link">
             {{ tempPart.partDescription }}
           </a>
+
         </div>
       </mat-grid-tile>
     </mat-grid-list>
+
     <div *ngIf="parts.length == 0" class="alert alert-warning" role="alert">
       No part available for selected car part.
     </div>
+
     <mat-paginator
       (page)="onPageChanged($event)"
       [length]="theTotalElements"

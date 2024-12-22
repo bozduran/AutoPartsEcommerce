@@ -11,7 +11,7 @@ export class MainPartCategoryService {
   // -- inject HttpClient
   constructor(private httpClient: HttpClient) { }
 
-  private baseUrl = "http://localhost:8080/mainPartCategories";
+  private baseUrl = "http://localhost:8080/api/mainPartCategories";
 
   // -- getMainPartCategories get all main part categories
   getMainPartCategories():Observable<MainPartCategory[]> {

@@ -11,7 +11,7 @@ export class CarModelService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private baseUrl="http://localhost:8080/carModels/search/getCarModelsByCarBrand_Id";
+  private baseUrl="http://localhost:8080/api/carModels/search/getCarModelsByCarBrand_Id";
 
   getCarModelsByCarBrandId(pageNumber:number,
                pageSize:number,

@@ -2,18 +2,27 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CarPartService} from '../../services/car-part.service';
 import {Part} from '../../common/part';
+import {MatButton} from '@angular/material/button';
+import {CartService} from '../../services/cart.service';
+import {CartItem} from '../../common/cart-item';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-part-details',
-  imports: [],
+  imports: [
+    MatButton,
+    CurrencyPipe
+  ],
   templateUrl: './part-details.component.html',
   styleUrl: './part-details.component.css'
 })
 export class PartDetailsComponent implements OnInit {
 
-  part: Part= new Part();
+  part: Part = new Part();
 
-  constructor(private route: ActivatedRoute,private partService:CarPartService) {
+  constructor(private route: ActivatedRoute,
+              private partService:CarPartService,
+              private cartService: CartService) {
   }
 
   ngOnInit(): void {
@@ -30,8 +39,14 @@ export class PartDetailsComponent implements OnInit {
         this.part = data;
       }
     )
-    console.log(partId ," ",
-      this.part.id);
+    console.log(partId ," ", this.part.id);
+
+  }
+
+  addToCartClicked() {
+
+    console.log(this.part.price);
+    this.cartService.addToCart(new CartItem(this.part) );
 
   }
 }

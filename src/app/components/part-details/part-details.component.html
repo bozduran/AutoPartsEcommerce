@@ -1,1 +1,11 @@
-<p>{{ part.id }}</p>
+<div class="product-details">
+  <h2>Product Details</h2>
+  <p><strong>ID:</strong> {{ part.id }}</p>
+    <p><strong>Name:</strong> {{ part.partName }}</p>
+  <p><strong>Description:</strong> {{ part.partDescription }}</p>
+  <p><strong>VIN Number:</strong> {{ part.vinNumber }}</p>
+  <p><strong>Price:</strong> {{ part.price  | currency:'EUR'}} </p>
+
+  <button mat-flat-button (click)="addToCartClicked()">Add to cart</button>
+
+</div>

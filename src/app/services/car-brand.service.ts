@@ -10,11 +10,11 @@ export class CarBrandService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private baseUrl="http://localhost:8080/carBrands/search/findAllByOrderByBrandNameAsc";
+  private baseUrl="http://localhost:8080/api/carBrands/search/findAllByOrderByBrandNameAsc";
 
   getCarBrands(pageNumber:number,
                pageSize:number):Observable<GetResponseCarBrand> {
-    console.log("getCarBrands");
+
     return this.httpClient.get<GetResponseCarBrand>(this.baseUrl+`?page=${pageNumber}&size=${pageSize}`);
 
   }

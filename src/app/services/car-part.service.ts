@@ -8,13 +8,15 @@ import {Part} from '../common/part';
   providedIn: 'root'
 })
 export class CarPartService {
-  private baseUrl="http://localhost:8080/parts/search"
-  private findByIdUrl=this.baseUrl + '/findPartByCarModelId';
-  private findAllPartsUrl =  'http://localhost:8080/parts';
+
+  private baseUrl= "http://localhost:8080/api/parts/search"
+  private findByIdUrl=  this.baseUrl + '/findPartByCarModelId';
+  private findAllPartsUrl = 'http://localhost:8080/api/parts';
+
   constructor(private httpClient: HttpClient) { }
 
 
-  getCarPartById(pageNumber: number, pageSize: number, carModelId: number):Observable<GetResponsePart> {
+  getPartByModel(pageNumber: number, pageSize: number, carModelId: number):Observable<GetResponsePart> {
 
     return this.httpClient.get<GetResponsePart>(
       this.findByIdUrl+`?carModelId=${carModelId}&page=${pageNumber}&size=${pageSize}`
@@ -23,7 +25,7 @@ export class CarPartService {
   }
 
   getAllCarParts(pageNumber: number, pageSize: number) {
-    console.log(this.findAllPartsUrl+`?page=${pageNumber}&size=${pageSize}`)
+
     return this.httpClient.get<GetResponsePart>(
       this.findAllPartsUrl+`?page=${pageNumber}&size=${pageSize}`
     )

@@ -8,14 +8,14 @@ import {HttpClient} from '@angular/common/http';
 })
 export class SubPartCategoryService {
 
-  baseUrl = "http://localhost:8080/subPartCategories";
+  baseUrl = "http://localhost:8080/api/subPartCategories";
 
   constructor(private httpClient: HttpClient) { }
 
 
   // -- getSubPartCategories get all main sub categories
   getSubPartCategories(mainPartCategoryId:number):Observable<SubPartCategory[]> {
-    console.log(this.httpClient.get(`${this.baseUrl}/search/getSubPartCategoriesByMainPartCategory_Id?id=${mainPartCategoryId}`))
+
     return this.httpClient.get<GetResponseSubPartCategory>(
       `${this.baseUrl}/search/getSubPartCategoriesByMainPartCategory_Id?id=${mainPartCategoryId}`)
       .pipe(
@@ -30,5 +30,5 @@ interface GetResponseSubPartCategory
   _embedded:{
     subPartCategories: SubPartCategory[];
   }
-  }
+}
 

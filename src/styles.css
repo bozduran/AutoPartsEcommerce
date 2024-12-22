@@ -165,3 +165,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
   height: 200px;
   background-size: cover;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.empty-cart-message {
+  text-align: center;
+  color: gray;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.cart-details-bottom{
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  text-align: center;
+  justify-content: space-evenly;
+
+}

@@ -4,6 +4,8 @@ import {SearchByCarBrandComponent} from './components/search-by-car-brand/search
 import {SearchByCarModelComponent} from './components/search-by-car-model/search-by-car-model.component';
 import {CarPartsComponent} from './components/car-parts/car-parts.component';
 import {PartDetailsComponent} from './components/part-details/part-details.component';
+import {CartDetailsComponent} from './components/cart-details/cart-details.component';
+import {CheckoutComponent} from './components/checkout/checkout.component';
 
 export const routes: Routes = [
   {path:'subPartsMenu',component:SubPartsMenuComponent},
@@ -13,7 +15,10 @@ export const routes: Routes = [
   {path:'carModel/:id',component:SearchByCarModelComponent},
   {path:'carModelParts/:id',component:CarPartsComponent},
   {path:'parts',component:CarPartsComponent},
-  {path:'carPart/:id',component:PartDetailsComponent}
+  {path:'parts/:id',component:CarPartsComponent},
+  {path:'partDetails/:id',component:PartDetailsComponent},
+  {path:'cartDetails',component:CartDetailsComponent},
+  {path:'checkout',component:CheckoutComponent}
 ];
 
 
