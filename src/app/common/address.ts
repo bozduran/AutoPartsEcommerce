@@ -4,6 +4,6 @@ constructor(public city:string,
             public state:string,
             public country:string,
             public street:string,
-            public zip_code:string) {
+            public zipCode:string) {
 }
 }

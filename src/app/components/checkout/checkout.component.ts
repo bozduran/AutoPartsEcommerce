@@ -7,12 +7,10 @@ import {Country} from '../../common/country';
 import {State} from '../../common/state';
 import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
 import {CustomValidator} from '../../validators/custom-validator';
-import {MatFormField} from '@angular/material/form-field';
+import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {MatLabel} from '@angular/material/form-field';
-import {MatError} from '@angular/material/form-field';
 import {MatOption} from '@angular/material/core';
-import {MatSelect, MatSelectChange} from '@angular/material/select';
+import {MatSelect} from '@angular/material/select';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatDivider} from '@angular/material/divider';
 import {MatList, MatListItem} from '@angular/material/list';
@@ -22,6 +20,8 @@ import {Address} from '../../common/address';
 import {OrderItem} from '../../common/order-item';
 import {Purchase} from '../../common/purchase';
 import {Order} from '../../common/order';
+import {CheckoutService} from '../../services/checkout.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -54,22 +54,24 @@ export class CheckoutComponent implements OnInit {
 
   checkoutFormGroup!: FormGroup;
 
-  totalPrice:number = 0;
-  totalQuantity:number = 0;
+  totalPrice: number = 0;
+  totalQuantity: number = 0;
 
-  creditCardYears:number[]=[];
-  creditCardMonths:number[]=[];
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
 
-  countries: Country[]=[];
+  countries: Country[] = [];
 
-  shippingAddressStates:State[]=[];
-  billingAddressStates:State[]=[];
+  shippingAddressStates: State[] = [];
+  billingAddressStates: State[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private customFormService : CustomFormService,
-              private cartService: CartService) { }
+              private customFormService: CustomFormService,
+              private cartService: CartService,
+              private checkoutService: CheckoutService, private router: Router) {
+  }
 
-  secondFormGroup!: AbstractControl ;
+  secondFormGroup!: AbstractControl;
   shippingAddress!: AbstractControl;
   customer!: AbstractControl;
   billingAddress!: AbstractControl;
@@ -81,11 +83,11 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  generateOrder(){
+  generateOrder(): Purchase {
 
     //     get customer
     let newCustomer = new Customer(this.checkoutFormGroup.get('customer.firstName')?.value,
-      this.checkoutFormGroup.get('customer.lastName')?.value,this.checkoutFormGroup.get('customer.email')?.value);
+      this.checkoutFormGroup.get('customer.lastName')?.value, this.checkoutFormGroup.get('customer.email')?.value);
 
 
     //    get billing and shipping addresses
@@ -104,10 +106,10 @@ export class CheckoutComponent implements OnInit {
 
     //   make carItem to orderItems array
     // @ts-ignore
-    const  orderItems :  OrderItem[] = [];
+    const orderItems: OrderItem[] = [];
 
-    for (let tempCartItem of this.cartService.cartItems){
-      orderItems.push( new OrderItem(tempCartItem) );
+    for (let tempCartItem of this.cartService.cartItems) {
+      orderItems.push(new OrderItem(tempCartItem));
     }
 
     let newOrder: Order = new Order(this.totalPrice, this.totalQuantity);
@@ -119,23 +121,24 @@ export class CheckoutComponent implements OnInit {
       newCustomer);
 
     console.log(newPurchase);
+    return newPurchase;
 
   }
 
-  initializeForm(){
+  initializeForm() {
     //checkout forms
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName:  new FormControl('',
+        firstName: new FormControl('',
           [Validators.required,
             Validators.minLength(2),
             CustomValidator.notOnlyWhitespace]),
-        lastName:  new FormControl('',
+        lastName: new FormControl('',
           [Validators.required,
             Validators.minLength(2),
             CustomValidator.notOnlyWhitespace]),
-        email:  new FormControl('',
+        email: new FormControl('',
           [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
@@ -199,21 +202,21 @@ export class CheckoutComponent implements OnInit {
 
 
     //add months and years to credit card form
-    const currentMonth :number = new Date().getMonth()+1;
+    const currentMonth: number = new Date().getMonth() + 1;
     this.customFormService.getMothForCreditCard(currentMonth).subscribe(
-      data =>{
+      data => {
         this.creditCardMonths = data;
       }
     )
 
     this.customFormService.getCountries().subscribe(
-      data=>{
+      data => {
         this.countries = data;
       }
     )
 
     this.customFormService.getYearsForCreditCard().subscribe(
-      data =>{
+      data => {
         this.creditCardYears = data;
       }
     )
@@ -226,11 +229,24 @@ export class CheckoutComponent implements OnInit {
       this.checkoutFormGroup.markAllAsTouched();
       return;
     }
-    this.generateOrder()
+
+    let purchase = this.generateOrder()
+
+    this.checkoutService.placeOrder(purchase).subscribe(
+      {
+        next: response => {
+          alert(`Your order has been received.\nOrder tracking number: ${response.purchaseId}`);
+          this.clearCart();
+        },
+        error: err => {
+          alert(`There was an error: ${err.message}`);
+        }
+      }
+    );
 
   }
 
-  copyShippingAddressToBillingAddress(event:any) {
+  copyShippingAddressToBillingAddress(event: any) {
     const isChecked = event?.checked;
 
     // @ts-ignore
@@ -239,8 +255,7 @@ export class CheckoutComponent implements OnInit {
         .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
 
       this.billingAddressStates = this.shippingAddressStates;
-    }
-    else {
+    } else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
       this.billingAddressStates = [];
     }
@@ -249,23 +264,23 @@ export class CheckoutComponent implements OnInit {
 
   handleMonthsAndYears() {
 
-    const currentYear:number = new Date().getFullYear();
+    const currentYear: number = new Date().getFullYear();
 
-    const selectedYear:number = Number(this.checkoutFormGroup.get('creditCard.expirationYear')?.value);
+    const selectedYear: number = Number(this.checkoutFormGroup.get('creditCard.expirationYear')?.value);
 
-    console.log("selected",selectedYear);
+    console.log("selected", selectedYear);
 
 
-    let startingMonth:number;
+    let startingMonth: number;
 
-    if (currentYear == selectedYear){
-      startingMonth = new Date().getMonth()+1;
-    }else{
+    if (currentYear == selectedYear) {
+      startingMonth = new Date().getMonth() + 1;
+    } else {
       startingMonth = 1;
     }
 
     this.customFormService.getMothForCreditCard(startingMonth).subscribe(
-      data =>{
+      data => {
         this.creditCardMonths = data;
       }
     )
@@ -274,7 +289,7 @@ export class CheckoutComponent implements OnInit {
 
   getStates(formGroupName: string) {
 
-    const  formGroup = this.checkoutFormGroup.get(formGroupName);
+    const formGroup = this.checkoutFormGroup.get(formGroupName);
 
     // @ts-ignore
     const countryName = formGroup.value.country.name;
@@ -283,20 +298,31 @@ export class CheckoutComponent implements OnInit {
     console.log(formGroupName);
 
     this.customFormService.getStates(countryCode).subscribe(
-      data =>{
-        if (formGroupName == 'shippingAddress'){
+      data => {
+        if (formGroupName == 'shippingAddress') {
           console.log('countryCode', countryCode)
           this.shippingAddressStates = data;
           console.log(data);
-        }else {
+        } else {
           this.billingAddressStates = data;
         }
 
         // @ts-ignore
         formGroup?.get('state').setValue(data[0]);
       }
-
     );
 
+  }
+
+  private clearCart() {
+
+    //    clear the data related to cart at cart service
+    this.cartService.clearCartData();
+
+    //    reset data from form
+    this.checkoutFormGroup.reset();
+
+    //    redirect
+    this.router.navigateByUrl("/parts");
   }
 }

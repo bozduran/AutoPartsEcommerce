@@ -86,4 +86,8 @@ export class CartService {
     this.totalQuantity.next(quantity);
 
   }
+
+  clearCartData() {
+
+  }
 }
