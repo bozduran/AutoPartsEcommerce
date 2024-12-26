@@ -1,0 +1,39 @@
+.product-details {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.product-title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #3f51b5; /* Material Design blue */
+}
+
+.product-info p {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+.product-info strong {
+  color: #424242; /* Dark grey */
+}
+
+.price {
+  font-weight: bold;
+  color: #4caf50; /* Green */
+}
+
+.product-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button {
+  font-size: 1rem;
+  padding: 10px 20px;
+}

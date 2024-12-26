@@ -88,6 +88,6 @@ export class CartService {
   }
 
   clearCartData() {
-
+    this.cartItems = [];
   }
 }

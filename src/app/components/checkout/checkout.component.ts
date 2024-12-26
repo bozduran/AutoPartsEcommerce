@@ -92,14 +92,14 @@ export class CheckoutComponent implements OnInit {
 
     //    get billing and shipping addresses
     let newShippingAddress = new Address(this.checkoutFormGroup.get('shippingAddress.city')?.value,
-      this.checkoutFormGroup.get('shippingAddress.state')?.value,
-      this.checkoutFormGroup.get('shippingAddress.country')?.value,
+      this.checkoutFormGroup.get('shippingAddress.state')?.value.name,
+      this.checkoutFormGroup.get('shippingAddress.country')?.value.name,
       this.checkoutFormGroup.get('shippingAddress.street')?.value,
       this.checkoutFormGroup.get('shippingAddress.zipCode')?.value)
 
     let newBillingAddress = new Address(this.checkoutFormGroup.get('billingAddress.city')?.value,
-      this.checkoutFormGroup.get('billingAddress.state')?.value,
-      this.checkoutFormGroup.get('billingAddress.country')?.value,
+      this.checkoutFormGroup.get('billingAddress.state.name')?.value.name,
+      this.checkoutFormGroup.get('billingAddress.country.name')?.value.name,
       this.checkoutFormGroup.get('billingAddress.street')?.value,
       this.checkoutFormGroup.get('billingAddress.zipCode')?.value)
 
@@ -114,13 +114,13 @@ export class CheckoutComponent implements OnInit {
 
     let newOrder: Order = new Order(this.totalPrice, this.totalQuantity);
 
-    const newPurchase = new Purchase(orderItems,
+    const newPurchase = new Purchase(newCustomer,
+      newBillingAddress,
+      newShippingAddress,
       newOrder,
-      newShippingAddress,
-      newShippingAddress,
-      newCustomer);
+      orderItems);
 
-    console.log(newPurchase);
+
     return newPurchase;
 
   }
@@ -230,7 +230,7 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
-    let purchase = this.generateOrder()
+    let purchase = this.generateOrder();
 
     this.checkoutService.placeOrder(purchase).subscribe(
       {
@@ -268,7 +268,6 @@ export class CheckoutComponent implements OnInit {
 
     const selectedYear: number = Number(this.checkoutFormGroup.get('creditCard.expirationYear')?.value);
 
-    console.log("selected", selectedYear);
 
 
     let startingMonth: number;
@@ -295,14 +294,11 @@ export class CheckoutComponent implements OnInit {
     const countryName = formGroup.value.country.name;
     // @ts-ignore
     const countryCode = formGroup.value.country.code;
-    console.log(formGroupName);
 
     this.customFormService.getStates(countryCode).subscribe(
       data => {
         if (formGroupName == 'shippingAddress') {
-          console.log('countryCode', countryCode)
           this.shippingAddressStates = data;
-          console.log(data);
         } else {
           this.billingAddressStates = data;
         }

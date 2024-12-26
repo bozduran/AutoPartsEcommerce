@@ -9,6 +9,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {CartStatusComponent} from '../cart-status/cart-status.component';
+import {LoginStatusComponent} from '../login-status/login-status.component';
 
 @Component({
   selector: 'app-nav-menu',
@@ -18,7 +19,8 @@ import {CartStatusComponent} from '../cart-status/cart-status.component';
     MainPartsMenuComponent,
     MatButton,
     MatIcon,
-    CartStatusComponent
+    CartStatusComponent,
+    LoginStatusComponent
   ],
   templateUrl: './nav-menu.component.html',
   styleUrl: './nav-menu.component.css'

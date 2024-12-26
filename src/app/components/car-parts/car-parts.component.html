@@ -15,7 +15,7 @@
     <div *ngIf="parts.length == 0" class="alert alert-warning" role="alert">
       No part available for selected car part.
     </div>
-
+    <br>
     <mat-paginator
       (page)="onPageChanged($event)"
       [length]="theTotalElements"

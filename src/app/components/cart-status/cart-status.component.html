@@ -1,8 +1,10 @@
-
-<button mat-icon-button aria-label="true"  routerLink="/cartDetails" routerLinkActive="active-link">
-  <mat-icon><span class="material-symbols-outlined">
+<div class="cart-status-class">
+  <button mat-icon-button aria-label="true" routerLink="/cartDetails" routerLinkActive="active-link">
+    <mat-icon><span class="material-symbols-outlined">
                 shopping_cart
                 </span></mat-icon>
-</button>
+  </button>
 
-<p>{{ totalPrice || totalQuantity }}</p>
+  <div *ngIf="totalQuantity>0">  <p>{{ totalPrice || totalQuantity }}</p></div>
+
+</div>

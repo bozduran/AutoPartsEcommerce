@@ -1,3 +1,4 @@
+<!--
 <div class="product-details">
   <h2>Product Details</h2>
   <p><strong>ID:</strong> {{ part.id }}</p>
@@ -8,4 +9,21 @@
 
   <button mat-flat-button (click)="addToCartClicked()">Add to cart</button>
 
+</div>
+-->
+
+<div class="product-details mat-elevation-z4">
+  <h2 class="product-title">Product Details</h2>
+
+  <div class="product-info">
+    <p><strong>ID:</strong> {{ part.id }}</p>
+    <p><strong>Name:</strong> {{ part.partName }}</p>
+    <p><strong>Description:</strong> {{ part.partDescription }}</p>
+    <p><strong>VIN Number:</strong> {{ part.vinNumber }}</p>
+    <p><strong>Price:</strong> <span class="price">{{ part.price | currency:'EUR' }}</span></p>
+  </div>
+
+  <div class="product-actions">
+    <button mat-flat-button color="primary" (click)="addToCartClicked()">Add to Cart</button>
+  </div>
 </div>
