@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
-import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatIconButton} from "@angular/material/button";
 import {MatBadge} from '@angular/material/badge';
 import {CartService} from '../../services/cart.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-cart-status',
@@ -13,7 +12,7 @@ import {NgIf} from '@angular/common';
     MatIconButton,
     RouterLink,
     RouterLinkActive,
-    NgIf,
+    MatBadge,
   ],
   templateUrl: './cart-status.component.html',
   styleUrl: './cart-status.component.css'

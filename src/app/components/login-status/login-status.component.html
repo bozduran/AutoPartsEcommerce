@@ -10,4 +10,8 @@
   <button mat-flat-button color="primary" *ngIf="isAuthenticated" (click)="logout()"
   >Logout
   </button>
+
+  <button mat-flat-button color="primary" *ngIf="isAuthenticated" routerLink="/members"
+  >User panel
+  </button>
 </div>

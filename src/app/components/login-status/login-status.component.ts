@@ -1,15 +1,15 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {OKTA_AUTH, OktaAuthModule, OktaAuthStateService} from '@okta/okta-angular';
+import {Component, Inject, Injectable, OnInit} from '@angular/core';
+import {OKTA_AUTH, OktaAuthStateService} from '@okta/okta-angular';
 import OktaAuth from '@okta/okta-auth-js';
 import {NgIf} from '@angular/common';
 import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 
+@Injectable({ providedIn: 'root' })
 
 @Component({
   selector: 'app-login-status',
   imports: [
-    OktaAuthModule,
     NgIf,
     MatButton,
     RouterLink
@@ -38,6 +38,7 @@ export class LoginStatusComponent implements OnInit {
   }
 
   private getUserDetails() {
+
     if (this.isAuthenticated) {
       this.oktaAuth.getUser().then(
         (res) => {

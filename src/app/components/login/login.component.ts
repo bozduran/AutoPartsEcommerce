@@ -18,11 +18,15 @@ export class LoginComponent implements OnInit {
 
   constructor(@Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
     //    need declaration file src/okta-signing-widget.d.ts
+
+
     this.oktaSignin = new OktaSignIn({
       logo: 'logo-signin.png', //   added to public with favico
-      //    load parameters from config file
-      baseUrl: autoPartsConfig.oidc.issuer.split('/oauth2')[0],
+      baseUrl: autoPartsConfig.oidc.issuer.split('/oauth2')[0],      //    load parameters from config file
+      clientId: autoPartsConfig.oidc.clientId,
       redirectUri: autoPartsConfig.oidc.redirectUri,
+      useClassicEngine: true,
+
       authParams: {
         pkcs: true,  //    must have !!!!
         issuer: autoPartsConfig.oidc.issuer,

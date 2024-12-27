@@ -2,13 +2,12 @@ import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {NavMenuComponent} from './components/nav-menu/nav-menu.component';
 import {OktaAuthModule} from '@okta/okta-angular';
-import {CommonModule} from '@angular/common';
 
 
 //    add OktaAuthModule
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavMenuComponent],
+  imports: [RouterOutlet, NavMenuComponent,OktaAuthModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

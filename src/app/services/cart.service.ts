@@ -8,7 +8,22 @@ import {BehaviorSubject, Subject} from 'rxjs';
 })
 export class CartService {
 
-  constructor(private httpClient: HttpClient) {
+  //    to store the items in browser
+  storage:Storage = sessionStorage;
+
+
+  constructor() {
+
+    this.parseCartItemFromSessionStorage(
+      this.storage.getItem('cartItems'));
+
+  }
+
+  parseCartItemFromSessionStorage(dataToParse:any){
+    if (dataToParse!=null){
+      this.cartItems = JSON.parse(dataToParse);
+      this.calculateTotals();
+    }
   }
 
   private baseUrl = "http://localhost:8080/api/";
@@ -55,6 +70,10 @@ export class CartService {
 
 
   }
+  //    save data to browser
+  saveCartItemsToSessionStorage(){
+    this.storage.setItem('cartItems',JSON.stringify(this.cartItems));
+  }
 
   remove(cartItemToRemove: CartItem) {
 
@@ -73,17 +92,17 @@ export class CartService {
     let quantity = 0;
     let price = 0;
 
-    console.log("---------------")
+
     for (let tempCartItem of this.cartItems) {
       price += tempCartItem.price * tempCartItem.quantity;
       quantity += tempCartItem.quantity;
-      console.log(tempCartItem)
     }
-    console.log("-------------")
 
     //    send new prices and quantity to all
     this.totalPrice.next(price);
     this.totalQuantity.next(quantity);
+
+    this.saveCartItemsToSessionStorage();
 
   }
 
