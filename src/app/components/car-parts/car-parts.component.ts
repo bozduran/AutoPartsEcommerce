@@ -28,6 +28,7 @@ export class CarPartsComponent implements OnInit {
 
   carModelId: number =0;
   carBrandId: number = 0;
+  subPartCategoryId: number = 0;
 
   pageNumber:number = 0;
   pageSize:number = 10;
@@ -86,16 +87,32 @@ export class CarPartsComponent implements OnInit {
   loadCarParts(){
     //    check if there is id
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+    const urlSegments = this.route.snapshot.url.map(segment => segment.path);
 
-    if (hasCategoryId) {
+    if (urlSegments.includes('sub-part')) {
+      //    show part by the subpart category
+      this.subPartCategoryId = +this.route.snapshot.paramMap.get('id')!;
+      this.getCarPartsBySubPartCategoryId();
+    } else if (hasCategoryId) {
       //    Show parts for a specific car model based on id
       console.log(' loadCarParts' + this.route.snapshot.paramMap.get('id'));
       this.carModelId = +this.route.snapshot.paramMap.get('id')!;
       this.getCarPartsByCarModel();
-    }else{
+    } else {
       //    Show all parts
       this.getAllParts();
     }
+  }
+
+  getCarPartsBySubPartCategoryId(){
+    this.carPartService.getCarPartsBySubPartCategoryId(
+      this.pageNumber-1,
+      this.pageSize,
+      this.subPartCategoryId
+    ).subscribe(
+      this.processResult()
+    );
+
   }
 
   getCarPartsByCarModel(){

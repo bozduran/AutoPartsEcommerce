@@ -1,30 +1,5 @@
-<!--
 
-    <a>Main parts
-    </a>
-    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngFor="let tempMainPartsCategory of mainPartCategories" >
-          {{tempMainPartsCategory.mainPartCategoryName}}
-
-      </button>
-    </mat-menu>
-
-    <ul>
-      <li *ngFor="let tempMainPartsCategory of mainPartCategories">
-        <div class="container">
-          <div class="box">
-            <a routerLink="/mainPartCategory/{{tempMainPartsCategory.id}}" routerLinkActive="active-link">
-              {{tempMainPartsCategory.mainPartCategoryName}}
-            </a>
-          </div>
-        </div>
-
-      </li>
-    </ul>
-
--->
-<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<button mat-button [matMenuTriggerFor]="menu">Parts categories</button>
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item *ngFor="let tempMainPartsCategory of mainPartCategories" [routerLink]="'/mainPartCategory/' + tempMainPartsCategory.id"

@@ -3,15 +3,19 @@
     Welcome back {{ userFullName }}!
   </div>
 
-  <button mat-flat-button color="primary" *ngIf="!isAuthenticated" routerLink="/login"
+  <button mat-flat-button class="btn-grad" *ngIf="!isAuthenticated" routerLink="/login"
   >Login
   </button>
 
-  <button mat-flat-button color="primary" *ngIf="isAuthenticated" (click)="logout()"
+  <button mat-flat-button class="btn-grad" *ngIf="isAuthenticated" (click)="logout()"
   >Logout
   </button>
 
-  <button mat-flat-button color="primary" *ngIf="isAuthenticated" routerLink="/members"
+  <button mat-flat-button class="btn-grad" *ngIf="isAuthenticated" routerLink="/members"
   >User panel
+  </button>
+
+  <button mat-flat-button class="btn-grad" *ngIf="isAuthenticated" routerLink="/orders-history"
+  >Orders
   </button>
 </div>

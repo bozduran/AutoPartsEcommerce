@@ -52,6 +52,8 @@ import {Router} from '@angular/router';
 })
 export class CheckoutComponent implements OnInit {
 
+  storage:Storage = sessionStorage;
+
   checkoutFormGroup!: FormGroup;
 
   totalPrice: number = 0;
@@ -98,8 +100,8 @@ export class CheckoutComponent implements OnInit {
       this.checkoutFormGroup.get('shippingAddress.zipCode')?.value)
 
     let newBillingAddress = new Address(this.checkoutFormGroup.get('billingAddress.city')?.value,
-      this.checkoutFormGroup.get('billingAddress.state.name')?.value.name,
-      this.checkoutFormGroup.get('billingAddress.country.name')?.value.name,
+      this.checkoutFormGroup.get('billingAddress.state')?.value.name,
+      this.checkoutFormGroup.get('billingAddress.country')?.value.name,
       this.checkoutFormGroup.get('billingAddress.street')?.value,
       this.checkoutFormGroup.get('billingAddress.zipCode')?.value)
 
@@ -126,7 +128,13 @@ export class CheckoutComponent implements OnInit {
   }
 
   initializeForm() {
+
+    let userEmail:string = '';
+
     //checkout forms
+    if (this.storage.getItem('userEmail') != null) {
+      userEmail = this.storage.getItem('userEmail')!;
+    }
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -138,7 +146,7 @@ export class CheckoutComponent implements OnInit {
           [Validators.required,
             Validators.minLength(2),
             CustomValidator.notOnlyWhitespace]),
-        email: new FormControl('',
+        email: new FormControl(userEmail,
           [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({

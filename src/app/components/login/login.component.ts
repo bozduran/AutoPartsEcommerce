@@ -31,6 +31,11 @@ export class LoginComponent implements OnInit {
         pkcs: true,  //    must have !!!!
         issuer: autoPartsConfig.oidc.issuer,
         scopes: autoPartsConfig.oidc.scopes
+      },
+      features: {
+        // Used to enable registration feature on the widget.
+        // https://github.com/okta/okta-signin-widget#feature-flags
+        registration: true // REQUIRED
       }
 
     });

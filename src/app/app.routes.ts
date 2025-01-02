@@ -11,6 +11,8 @@ import {LoginComponent} from './components/login/login.component';
 import {MembersPageComponent} from './components/members-page/members-page.component';
 import {OktaAuth} from '@okta/okta-auth-js';
 import {Injector} from '@angular/core';
+import {OrderHistory} from './common/order-history';
+import {OrderHistoryComponent} from './components/order-history/order-history.component';
 
 
 export const routes: Routes = [
@@ -21,6 +23,7 @@ export const routes: Routes = [
   {path: 'carModel/:id', component: SearchByCarModelComponent},
   {path: 'carModelParts/:id', component: CarPartsComponent},
   {path: 'parts', component: CarPartsComponent},
+  {path:'sub-part/:id',component:CarPartsComponent},
   {path: 'parts/:id', component: CarPartsComponent},
   {path: 'partDetails/:id', component: PartDetailsComponent},
   {path: 'cartDetails', component: CartDetailsComponent},
@@ -31,7 +34,11 @@ export const routes: Routes = [
       onAuthRequired: sendToLogin
     }
   },
-
+  {
+    path: 'orders-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard], data: {
+      onAuthRequired: sendToLogin
+    }
+  },
 
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent}

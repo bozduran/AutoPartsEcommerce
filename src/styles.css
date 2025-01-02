@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons"); /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import '@fortawesome/fontawesome-free/css/all.css'; /* You can add global styles to this file, and also import other style files */
 
 body {
   font-family: "Times New Roman", Times, serif;
@@ -18,7 +19,7 @@ header{
 
   display: flex;
   justify-content: center;
-  background-color: #2d2c2c;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
 
 }
 
@@ -27,11 +28,11 @@ nav {
   display: flex;
   justify-content: center; /* Centers content horizontally */
   align-items: center; /* Centers content vertically */
-  background-color: #ffffff;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
 
 
   list-style: none;
-  border: #2d2c2c 2px solid;
+  border: #2d2c2c 1px solid;
 }
 
 
@@ -42,12 +43,24 @@ nav ul {
   justify-content: center; /* Centers content horizontally */
   align-items: center; /* Centers content vertically */
   border: #2c2f2c 1px solid;
+
 }
 
 footer {
   text-align: center;
-  background-color: #7a7878;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+
+}
+
+footer ul li{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 

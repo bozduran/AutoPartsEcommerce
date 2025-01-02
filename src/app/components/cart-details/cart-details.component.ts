@@ -1,14 +1,17 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CartService} from '../../services/cart.service';
 import {CartItem} from '../../common/cart-item';
-import {MatGridList, MatGridTile} from '@angular/material/grid-list';
-import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
+import {CurrencyPipe, NgIf} from '@angular/common';
 import {
   MatCell, MatCellDef,
-  MatColumnDef, MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatTableDataSource
+  MatColumnDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef,
+  MatTable,
+  MatTableDataSource
 } from '@angular/material/table';
-import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 
@@ -29,17 +32,14 @@ import {MatIcon} from '@angular/material/icon';
     NgIf,
     CurrencyPipe,
     MatButton,
-    MatHeaderRowDef,
-    MatRowDef,
+    MatHeaderCellDef,
     MatCellDef,
-    MatHeaderCellDef
+    MatHeaderRowDef,
+    MatRowDef
   ],
   templateUrl: './cart-details.component.html',
   styleUrl: './cart-details.component.css'
 })
-
-
-
 
 
 export class CartDetailsComponent implements OnInit {
@@ -49,9 +49,10 @@ export class CartDetailsComponent implements OnInit {
   totalQuantity: number = 0;
 
   // used for mat mat-table
-  columnsToDisplay = ['name','quantity', 'price','actions'];
+  columnsToDisplay = ['name', 'quantity', 'price', 'actions'];
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService) {
+  }
 
   @ViewChild(MatTable) table!: MatTable<CartItem>;
   dataSource = new MatTableDataSource<CartItem>([]);
@@ -83,21 +84,21 @@ export class CartDetailsComponent implements OnInit {
   }
 
 
-  decreaseCartItemQuantity(theCartItem:CartItem) {
+  decreaseCartItemQuantity(theCartItem: CartItem) {
 
     this.cartService.decreaseCartItemQuantity(theCartItem);
     this.table.renderRows();
 
   }
 
-  removeCartItem(theCartItem:CartItem) {
+  removeCartItem(theCartItem: CartItem) {
 
     this.cartService.remove(theCartItem);
     this.table.renderRows();
 
   }
 
-  addCartItem(theCartItem:CartItem) {
+  addCartItem(theCartItem: CartItem) {
     this.cartService.addToCart(theCartItem);
   }
 }
