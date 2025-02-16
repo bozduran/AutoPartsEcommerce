@@ -1,8 +1,10 @@
 # AutoPartsEcommerce
 This web shop is designed using Angular for frontend and Spring framework for the backend.
 
-Here you can see the link to the backend:[Spring backend](https://github.com/bozduran/PartsWarehouseManager)
-Here you can see a demo of the working app:[Demo video]()
+Here you can see the link to the backend:[Spring backend](https://github.com/bozduran/PartsWarehouseManager).
+
+Here you can see a demo of the working app:[Demo video]().
+
 
 
 Among those 2 framework I have used [Okta](https://developer.okta.com/) for the security and [Stripe](https://stripe.com/en-gr)
