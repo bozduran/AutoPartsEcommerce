@@ -1,18 +1,4 @@
-<!--
-<section class="content-grid">
-  <div class="container">
-    &lt;!&ndash; Loop through subPartCategories to display each category &ndash;&gt;
-    <div *ngFor="let tempSubPartCategory of subPartCategories" class="grid-item">
-      <div class="box">
-        &lt;!&ndash; Link to the detailed page of the category &ndash;&gt;
-        <a routerLink="/subPartCategory/{{tempSubPartCategory.id}}" routerLinkActive="active-link">
-          {{ tempSubPartCategory.subPartCategoryName }}
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
--->
+
 <section class="content-grid">
   <div class="container">
   <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
@@ -25,21 +11,6 @@
     </mat-grid-tile>
   </mat-grid-list>
 
-
   </div>
 </section>
-
-
-
-<!--
-<section><mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile *ngFor="let tempSubPartCategory of subPartCategories">
-
-      {{ tempSubPartCategory.subPartCategoryName }}
-
-  </mat-grid-tile>
-</mat-grid-list>
-</section>
-
--->
 

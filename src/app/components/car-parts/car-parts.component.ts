@@ -95,7 +95,6 @@ export class CarPartsComponent implements OnInit {
       this.getCarPartsBySubPartCategoryId();
     } else if (hasCategoryId) {
       //    Show parts for a specific car model based on id
-      console.log(' loadCarParts' + this.route.snapshot.paramMap.get('id'));
       this.carModelId = +this.route.snapshot.paramMap.get('id')!;
       this.getCarPartsByCarModel();
     } else {

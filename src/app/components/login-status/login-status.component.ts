@@ -26,6 +26,7 @@ export class LoginStatusComponent implements OnInit {
 
   constructor(private oktaAuthService: OktaAuthStateService,
               @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
+
   }
 
 
@@ -46,9 +47,8 @@ export class LoginStatusComponent implements OnInit {
         (res) => {
           this.userFullName = res.name as string;
 
-          //    store user email so we can retrive history of orders
+          //    store user email so we can retrieve history of orders
           this.storage.setItem('userEmail', res.email as string);
-          console.log(this.storage.getItem('userEmail'));
 
         });
     }
@@ -56,5 +56,7 @@ export class LoginStatusComponent implements OnInit {
 
   logout() {
     this.oktaAuth.signOut();
+    //    clear email from storage
+    sessionStorage.setItem('userEmail','');
   }
 }

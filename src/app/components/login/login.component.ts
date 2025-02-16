@@ -14,13 +14,13 @@ import autoPartsConfig from '../../config/autoPartsConfig';
 })
 export class LoginComponent implements OnInit {
 
-  oktaSignin: any;
+  oktaSigning: any;
 
   constructor(@Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
     //    need declaration file src/okta-signing-widget.d.ts
 
 
-    this.oktaSignin = new OktaSignIn({
+    this.oktaSigning = new OktaSignIn({
       logo: 'logo-signin.png', //   added to public with favico
       baseUrl: autoPartsConfig.oidc.issuer.split('/oauth2')[0],      //    load parameters from config file
       clientId: autoPartsConfig.oidc.clientId,
@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.oktaSignin.remove();
+    this.oktaSigning.remove();
 
-    this.oktaSignin.renderEl({
+    this.oktaSigning.renderEl({
         el: '#okta-sign-in-widget'  //    same as the html div class
       },
       (response: any) => {

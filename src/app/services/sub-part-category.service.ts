@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {SubPartCategory} from '../common/sub-part-category';
 import {map, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubPartCategoryService {
 
-  baseUrl = "http://localhost:8080/api/subPartCategories";
+  private baseUrl = environment.autoPartsUrl+"/subPartCategories";
 
   constructor(private httpClient: HttpClient) { }
 

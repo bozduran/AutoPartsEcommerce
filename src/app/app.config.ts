@@ -1,6 +1,6 @@
 import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
-import {provideHttpClient} from '@angular/common/http'; // Import for HTTP
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http'; // Import for HTTP
 
 import {routes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
@@ -15,6 +15,7 @@ import {
 import {OktaAuth} from '@okta/okta-auth-js';
 
 import autoPartsConfig from './config/autoPartsConfig';
+import {AuthInterceptorService} from './services/auth-interceptor.service';
 
 
 const oktaConfig = autoPartsConfig.oidc;
@@ -24,6 +25,11 @@ const oktaAuth = new OktaAuth(oktaConfig);
 export const appConfig: ApplicationConfig = {
 
   providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    {provide:
+      HTTP_INTERCEPTORS,
+      useClass:AuthInterceptorService,
+      multi: true},
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideHttpClient(),
@@ -31,7 +37,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     //    get okta providers
     importProvidersFrom(OktaAuthModule),
-    {provide: OKTA_CONFIG, useValue: {oktaAuth}},
+    {provide:
+      OKTA_CONFIG,
+      useValue: {oktaAuth}},
+
   ]
 
 };

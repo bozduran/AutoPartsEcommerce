@@ -22,7 +22,7 @@ import {MatPaginator} from '@angular/material/paginator';
 export class SearchByCarBrandComponent implements OnInit {
 
   carBrands: CarBrand[]=[];
-  pageNumber:number = 1; // --- see if wrong
+  pageNumber:number = 1;
   pageSize:number = 10;
   theTotalElements:number = 1;
 

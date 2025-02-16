@@ -3,15 +3,16 @@ import {CarModel} from '../common/car-model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Part} from '../common/part';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarPartService {
 
-  private baseUrl= "http://localhost:8080/api/parts/search"
+  private baseUrl= environment.autoPartsUrl + "/parts/search"
   private findByIdUrl=  this.baseUrl + '/findPartByCarModelId';
-  private findAllPartsUrl = 'http://localhost:8080/api/parts';
+  private findAllPartsUrl = environment.autoPartsUrl+'/parts';
   private findBySubPartCategoryIdUrl = this.baseUrl + '/findPartBySubPartCategoryId';
 
   constructor(private httpClient: HttpClient) { }
@@ -42,7 +43,6 @@ export class CarPartService {
   }
 
   getCarPartsBySubPartCategoryId(pageNumber: number, pageSize: number, subPartCategoryId: number){
-    console.log(this.findBySubPartCategoryIdUrl+`?findBySubPartCategoryIdUrl=${subPartCategoryId}&page=${pageNumber}&size=${pageSize}`);
     return this.httpClient.get<GetResponsePart>(
       this.findBySubPartCategoryIdUrl+`?subPartCategoryId=${subPartCategoryId}&page=${pageNumber}&size=${pageSize}`);
 

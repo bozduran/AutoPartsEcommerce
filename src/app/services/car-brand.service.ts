@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {CarBrand} from '../common/car-brand';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class CarBrandService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private baseUrl="http://localhost:8080/api/carBrands/search/findAllByOrderByBrandNameAsc";
+  private baseUrl= environment.autoPartsUrl+"/carBrands/search/findAllByOrderByBrandNameAsc";
 
   getCarBrands(pageNumber:number,
                pageSize:number):Observable<GetResponseCarBrand> {

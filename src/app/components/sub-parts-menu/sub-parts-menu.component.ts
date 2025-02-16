@@ -50,12 +50,10 @@ export class SubPartsMenuComponent implements OnInit {
       data=> {
         this.subPartCategories=data;
       });
-    console.log('size:'+this.subPartCategories);
   }
 
   private listSubPartCategories() {
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
-    console.log(this.route.snapshot.paramMap.get('id'));
 
     if (hasCategoryId) {
       this.currentSubPartCategoriesId = +this.route.snapshot.paramMap.get('id')!;

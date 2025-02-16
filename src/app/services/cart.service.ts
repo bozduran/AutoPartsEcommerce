@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CartItem} from '../common/cart-item';
 import {BehaviorSubject, Subject} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class CartService {
     }
   }
 
-  private baseUrl = "http://localhost:8080/api/";
+  private baseUrl = environment.autoPartsUrl;
 
   cartItems: CartItem[] = [];
 
@@ -75,6 +76,10 @@ export class CartService {
     this.storage.setItem('cartItems',JSON.stringify(this.cartItems));
   }
 
+  removeCartItemsFromSessionStorage(){
+    this.storage.removeItem('cartItems');
+  }
+
   remove(cartItemToRemove: CartItem) {
 
     // get index of item in the array
@@ -108,5 +113,9 @@ export class CartService {
 
   clearCartData() {
     this.cartItems = [];
+    this.totalPrice.next(0);
+    this.totalQuantity.next(0);
+    this.removeCartItemsFromSessionStorage();
+
   }
 }

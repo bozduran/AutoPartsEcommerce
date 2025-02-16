@@ -80,8 +80,7 @@ export class SearchByCarModelComponent implements OnInit {
         this.processResult()
       );
 
-    console.log("car length" +
-      ""+this.carModels.length);
+
   }
 
   private loadSpecificCarModels() {
@@ -91,7 +90,6 @@ export class SearchByCarModelComponent implements OnInit {
     if (hasCategoryId) {
       this.currentCarBrandId = +this.route.snapshot.paramMap.get('id')!;
     }
-    console.log(this.currentCarBrandId);
     this.loadCarModels();
   }
 

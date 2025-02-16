@@ -27,11 +27,12 @@ import {LoginStatusComponent} from '../login-status/login-status.component';
 })
 export class NavMenuComponent {
 
-  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer){
+  constructor(private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer){
     this.matIconRegistry.addSvgIcon(
       'shoppingCart', // Name for the icon
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        `src/assets/images/icons/shopping_cart.svg`),
+        `src/assets/images/icons/shopping-cart-svgrepo-com.svg`),
     );
 
   }

@@ -4,6 +4,7 @@ import {MatIconButton} from "@angular/material/button";
 import {MatBadge} from '@angular/material/badge';
 import {CartService} from '../../services/cart.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-cart-status',

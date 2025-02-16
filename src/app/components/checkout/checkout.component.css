@@ -3,3 +3,12 @@
   display: flex;
   flex-direction: column;
 }
+mat-stepper {
+  background-color: #1f817c; /* Light gray background */
+  padding: 16px; /* Optional: Add padding for better spacing */
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+card-element{
+  border-style: dotted;
+}

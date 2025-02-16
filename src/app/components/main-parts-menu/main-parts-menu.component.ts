@@ -26,12 +26,6 @@ export class MainPartsMenuComponent implements OnInit {
 
   mainPartCategories :MainPartCategory[]=[];
 
-  menuItems: string[] = ['Item 1', 'Item 2', 'Item 3'];
-
-  onMenuItemClick(item: string): void {
-    console.log('Clicked item:', item);
-    // Add your logic here
-  }
 
   constructor(private mainPartCategoryService:MainPartCategoryService) {
   }

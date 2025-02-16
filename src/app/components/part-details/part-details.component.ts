@@ -39,13 +39,11 @@ export class PartDetailsComponent implements OnInit {
         this.part = data;
       }
     )
-    console.log(partId ," ", this.part.id);
 
   }
 
   addToCartClicked() {
 
-    console.log(this.part.price);
     this.cartService.addToCart(new CartItem(this.part) );
 
   }

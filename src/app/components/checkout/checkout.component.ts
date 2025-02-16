@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from '@angular/material/stepper';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
@@ -22,6 +22,8 @@ import {Purchase} from '../../common/purchase';
 import {Order} from '../../common/order';
 import {CheckoutService} from '../../services/checkout.service';
 import {Router} from '@angular/router';
+import {environment} from '../../../environments/environment.development';
+import {PaymentInfo} from '../../common/payment-info';
 
 @Component({
   selector: 'app-checkout',
@@ -50,9 +52,9 @@ import {Router} from '@angular/router';
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css'
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, AfterViewInit {
 
-  storage:Storage = sessionStorage;
+  storage: Storage = sessionStorage;
 
   checkoutFormGroup!: FormGroup;
 
@@ -66,6 +68,15 @@ export class CheckoutComponent implements OnInit {
 
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
+
+  stripe = Stripe(environment.stripePublishableKey);
+
+  paymentInfo: PaymentInfo = new PaymentInfo();
+  cardElement: any;
+  displayError: any = "";
+
+
+  purchaseIsDisabled: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private customFormService: CustomFormService,
@@ -83,6 +94,10 @@ export class CheckoutComponent implements OnInit {
     this.subscribeCartDetails();
     this.initializeForm();
 
+  }
+
+  ngAfterViewInit() {
+    this.setupStripePaymentForm();
   }
 
   generateOrder(): Purchase {
@@ -129,7 +144,7 @@ export class CheckoutComponent implements OnInit {
 
   initializeForm() {
 
-    let userEmail:string = '';
+    let userEmail: string = '';
 
     //checkout forms
     if (this.storage.getItem('userEmail') != null) {
@@ -181,17 +196,7 @@ export class CheckoutComponent implements OnInit {
             Validators.minLength(2),
             CustomValidator.notOnlyWhitespace])
       }),
-      creditCard: this.formBuilder.group({
-        cardType: new FormControl('', [Validators.required]),
-        nameOnCard: new FormControl('',
-          [Validators.required,
-            Validators.minLength(2),
-            CustomValidator.notOnlyWhitespace]),
-        cardNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]{16}')]),
-        securityCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
-        expirationMonth: new FormControl('', [Validators.required]),
-        expirationYear: new FormControl('', [Validators.required])
-      })
+      creditCard: this.formBuilder.group({})
     });
 
   }
@@ -240,17 +245,55 @@ export class CheckoutComponent implements OnInit {
 
     let purchase = this.generateOrder();
 
-    this.checkoutService.placeOrder(purchase).subscribe(
-      {
-        next: response => {
-          alert(`Your order has been received.\nOrder tracking number: ${response.purchaseId}`);
-          this.clearCart();
-        },
-        error: err => {
-          alert(`There was an error: ${err.message}`);
+    this.paymentInfo.amount = this.totalPrice * 100;
+    this.paymentInfo.currency = "EUR";
+
+
+
+    if (this.displayError.textContent == "") {
+      this.purchaseIsDisabled = true;
+      this.paymentInfo.email = purchase.customer.email;
+
+      this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
+        (paymentIntentResponse) => {
+          this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
+            {
+              payment_method: {
+                card: this.cardElement,
+                billing_details: {
+                  email: purchase.customer.email,
+                  name: `${purchase.customer.firstName} ${purchase.customer.lastName}`,
+                  address: {
+                    line1: purchase.billingAddress.street,
+                    city: purchase.billingAddress.city,
+                    state: purchase.billingAddress.state,
+                    postal_code: purchase.billingAddress.zipCode,
+                    country: this.checkoutFormGroup.get('billingAddress.country')?.value.code
+                  }
+                }
+              },
+            }, {handleActions: false}).then((result: any) => {
+            if (result.error) {
+              this.purchaseIsDisabled = false;
+              alert(result.error.message);
+            } else {
+              this.checkoutService.placeOrder(purchase).subscribe(
+                {
+                  next: response => {
+                    this.clearCart();
+                    alert(`Your order has been received.\nOrder tracking number: ${response.purchaseId}`);
+                  },
+                  error: err => {
+                    alert(`There was an error: ${err.message}`);
+                  }
+                });
+            }
+          })
         }
-      }
-    );
+      )
+    } else {
+      this.checkoutFormGroup.markAllAsTouched();
+    }
 
   }
 
@@ -270,29 +313,6 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  handleMonthsAndYears() {
-
-    const currentYear: number = new Date().getFullYear();
-
-    const selectedYear: number = Number(this.checkoutFormGroup.get('creditCard.expirationYear')?.value);
-
-
-
-    let startingMonth: number;
-
-    if (currentYear == selectedYear) {
-      startingMonth = new Date().getMonth() + 1;
-    } else {
-      startingMonth = 1;
-    }
-
-    this.customFormService.getMothForCreditCard(startingMonth).subscribe(
-      data => {
-        this.creditCardMonths = data;
-      }
-    )
-
-  }
 
   getStates(formGroupName: string) {
 
@@ -328,5 +348,22 @@ export class CheckoutComponent implements OnInit {
 
     //    redirect
     this.router.navigateByUrl("/parts");
+  }
+
+  private setupStripePaymentForm() {
+    var elements = this.stripe.elements();
+
+    this.cardElement = elements.create('card', {hidePostalCode: true});
+
+    this.cardElement.mount('#card-element');
+
+    this.cardElement.on('change', (event: any) => {
+      this.displayError = document.getElementById('card-errors');
+      if (event.complete) {
+        this.displayError.textContent = '';
+      } else if (event.error) {
+        this.displayError.textContent = event.error.message;
+      }
+    })
   }
 }

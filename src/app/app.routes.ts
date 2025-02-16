@@ -15,6 +15,7 @@ import {OrderHistory} from './common/order-history';
 import {OrderHistoryComponent} from './components/order-history/order-history.component';
 
 
+
 export const routes: Routes = [
   {path: 'subPartsMenu', component: SubPartsMenuComponent},
   {path: '', redirectTo: '/subPartsMenu', pathMatch: 'full'},

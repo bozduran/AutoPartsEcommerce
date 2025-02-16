@@ -125,7 +125,7 @@
     <!-- Add check box to copy shipping to billing -->
 
     <section>
-      <mat-checkbox class="example-margin" (change)="copyShippingAddressToBillingAddress($event)">Check me!
+      <mat-checkbox class="example-margin" (change)="copyShippingAddressToBillingAddress($event)">Check if billing and shipping address is the same location.
       </mat-checkbox>
     </section>
 
@@ -217,88 +217,23 @@
 
   <!-- Credit Card -->
   <mat-step [stepControl]="shippingAddress">
-    <ng-template matStepLabel>Credit Card</ng-template>
-
 
     <form [formGroup]="checkoutFormGroup">
-
       <div formGroupName="creditCard" class="form-area">
+        <h2>Credit card</h2>
+        <div id='card-element'>
+          <!-- Stripe credit card element -->
+        </div>
 
-        <mat-form-field>
-          <mat-label>Card Type</mat-label>
-          <mat-select formControlName="cardType">
-            <mat-option value="visa">Visa</mat-option>
-            <mat-option value="mastercard">Mastercard</mat-option>
-          </mat-select>
-          <mat-error *ngIf="checkoutFormGroup.get('creditCard.cardType')?.hasError('required')">
-            Card type is required.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Name on Card</mat-label>
-          <input matInput placeholder="Name on Card" formControlName="nameOnCard">
-
-          <mat-error *ngIf="checkoutFormGroup.get('nameOnCard')?.hasError('required')">
-            Zip Code is required
-          </mat-error>
-          <mat-error *ngIf="checkoutFormGroup.get('nameOnCard')?.hasError('minlength')">
-            Zip Code must be at least 2 characters long
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Card Number</mat-label>
-          <input matInput placeholder="Card Number" formControlName="cardNumber">
-
-          <mat-error *ngIf="checkoutFormGroup.get('creditCard.cardNumber')?.hasError('required')">
-            Card number is required.
-          </mat-error>
-          <mat-error *ngIf="checkoutFormGroup.get('creditCard.cardNumber')?.hasError('pattern')">
-            Card number must be 16 digits long.
-          </mat-error>
-
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Security Code</mat-label>
-          <input matInput placeholder="Security Code" formControlName="securityCode">
-
-          <mat-error *ngIf="checkoutFormGroup.get('creditCard.securityCode')?.hasError('required')">
-            Security number is required.
-          </mat-error>
-          <mat-error *ngIf="checkoutFormGroup.get('creditCard.securityCode')?.hasError('pattern')">
-            Security number must be 3 digits long.
-          </mat-error>
-
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Expiration Month</mat-label>
-          <mat-select formControlName="expirationMonth">
-            <mat-option *ngFor="let month of creditCardMonths" [value]="month">
-              {{ month }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="checkoutFormGroup.get('creditCard.expirationMonth')?.hasError('required')">
-            Expiration month is required.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Expiration Year</mat-label>
-          <mat-select formControlName="expirationYear" (selectionChange)="handleMonthsAndYears()">
-            <mat-option *ngFor="let year of creditCardYears" [value]="year">
-              {{ year }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="checkoutFormGroup.get('creditCard.expirationYear')?.hasError('required')">
-            Expiration year is required.
-          </mat-error>
-        </mat-form-field>
+        <!-- This will show the errors from stripe -->
+        <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
 
       </div>
     </form>
+
+    <ng-template matStepLabel>Credit Card</ng-template>
+
+
 
     <button mat-button matStepperPrevious>Back</button>
     <button mat-button matStepperNext>Next</button>
@@ -315,7 +250,7 @@
       <mat-divider></mat-divider>
       <mat-list-item>Total quantity: {{ totalQuantity }}</mat-list-item>
       <mat-divider></mat-divider>
-      <button mat-button type="button" (click)="submit()">Submit</button>
+      <button mat-button type="button" (click)="submit()" [disabled]="purchaseIsDisabled">Submit</button>
     </mat-list>
     <mat-list-item>Item 1</mat-list-item>
 
