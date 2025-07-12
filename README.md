@@ -83,3 +83,18 @@ For more information on using the Angular CLI, including detailed command refere
 `npm install @okta/okta-signin-widget`
 
 `npm install @okta/okta-angular`
+
+`npm audit fix` 
+
+`ng version`
+##  Install stripe
+`npm install stripe`
+
+## Add https use the command :
+```bash
+openssl req -x509 \
+  -out ssl-localhost/localhost.crt \
+  -keyout ssl-localhost/localhost.key \
+  -newkey rsa:2048 -nodes -sha256 -days 365 \
+  -config localhost.conf
+```

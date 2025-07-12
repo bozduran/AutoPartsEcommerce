@@ -1,4 +1,4 @@
-import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, importProvidersFrom, NgModule, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http'; // Import for HTTP
 
@@ -27,19 +27,19 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     {provide:
+      OKTA_CONFIG,
+      useValue: { oktaAuth } },
+    {provide:
       HTTP_INTERCEPTORS,
       useClass:AuthInterceptorService,
       multi: true},
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
-    provideHttpClient(),
     provideAnimationsAsync('noop'),
     provideAnimationsAsync(),
-    //    get okta providers
     importProvidersFrom(OktaAuthModule),
-    {provide:
-      OKTA_CONFIG,
-      useValue: {oktaAuth}},
+    //    get okta providers
+
 
   ]
 

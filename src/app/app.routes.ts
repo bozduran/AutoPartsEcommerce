@@ -30,6 +30,7 @@ export const routes: Routes = [
   {path: 'cartDetails', component: CartDetailsComponent},
   {path: 'checkout', component: CheckoutComponent},
 
+  // secured end points
   {
     path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard], data: {
       onAuthRequired: sendToLogin
@@ -40,7 +41,7 @@ export const routes: Routes = [
       onAuthRequired: sendToLogin
     }
   },
-
+  // go to login
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent}
 ];

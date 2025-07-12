@@ -1,7 +1,7 @@
 export default {
   oidc: {
-    clientId: 'add client id',
-    issuer: 'add issuer',
+    clientId: '', // remove in github
+    issuer: '',  // remove in github
     redirectUri: 'https://localhost:4200/login/callback',
     scopes: ['openid', 'profile', 'email'],
   }

@@ -53,6 +53,9 @@ export class OrderHistoryComponent implements OnInit {
 
     this.handleOrderHistory();
     this.dataSource.data = this.orderHistory;
+    if (this.orderHistory.length > 0) {
+      console.log(this.orderHistory);
+    }
 
   }
 

@@ -23,7 +23,9 @@ export class CartStatusComponent {
   totalPrice: number = 0.00;
   totalQuantity: number = 0;
 
-  constructor(private cartService: CartService) { }
+
+  constructor(private cartService: CartService,
+              ) { }
 
   ngOnInit(): void {
     this.updateCartStatus();
